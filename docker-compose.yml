@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  nest-api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: yarn start:dev
+    volumes:
+      - ./:/opt/app:z
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: development
+      PORT: 80
+    ports:
+      - 3000:80
+

@@ -1,5 +1,7 @@
 FROM node:20-alpine
 
+ENV JWT_SECRET="Test value, change-me"
+
 WORKDIR /opt/app
 
 COPY package*.json yarn.lock ./

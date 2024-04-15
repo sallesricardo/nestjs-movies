@@ -2,6 +2,8 @@ FROM node:20-alpine
 
 ENV JWT_SECRET="Test value, change-me"
 
+RUN npm install -g typescript @nestjs/cli eslint
+
 WORKDIR /opt/app
 
 COPY package*.json yarn.lock ./

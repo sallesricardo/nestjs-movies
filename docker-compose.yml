@@ -7,12 +7,17 @@ services:
       dockerfile: ./Dockerfile
     command: yarn start:dev
     volumes:
-      - ./:/opt/app:z
+      - ./src:/opt/app/src:z
     env_file:
       - .env
     environment:
       NODE_ENV: development
       PORT: 80
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER:-postgres}
+      DB_PASSWD: ${POSTGRES_PASSWORD:-changeme}
+      DB_NAME: movies
     ports:
       - 3000:80
 
@@ -24,7 +29,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
       PGDATA: /data/postgres
     volumes:
-       - ./postgres-data:/data/postgres
+      - ./postgres-data:/data/postgres
     ports:
       - "5432:5432"
     restart: unless-stopped

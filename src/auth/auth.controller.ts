@@ -23,7 +23,7 @@ export class AuthController {
 
     @UseGuards(AuthGuard)
     @Get('profile')
-    getProfile(@Request() req) {
-        return req.user;
+    getProfile(@Request() req: Request & { user: { sub: number } }) {
+        return this.authService.getUser(req.user.sub);
     }
 }

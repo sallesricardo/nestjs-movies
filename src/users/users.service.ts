@@ -35,6 +35,17 @@ export class UsersService {
         return this.usersRepository.findOneBy({ username });
     }
 
+    async getUser(id: number): Promise<Omit<User, 'password'> | undefined> {
+        const {
+            id: userId,
+            username,
+            firstName,
+            lastName,
+            isActive,
+        } = await this.usersRepository.findOneBy({ id });
+        return { id: userId, username, firstName, lastName, isActive };
+    }
+
     async checkUserPassword(username: string, password: string) {
         const user = await this.findOne(username);
         if (user) {

@@ -7,7 +7,9 @@ import {
     Param,
     Delete,
     UseGuards,
+    UseInterceptors,
 } from '@nestjs/common';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
@@ -30,6 +32,7 @@ export class MoviesController {
     }
 
     @UseGuards(AuthGuard)
+    @UseInterceptors(CacheInterceptor)
     @Get(':id')
     findOne(@Param('id') id: string) {
         return this.moviesService.findOne(+id);

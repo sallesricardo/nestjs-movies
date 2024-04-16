@@ -8,6 +8,7 @@ import {
     Delete,
     UseGuards,
     UseInterceptors,
+    BadRequestException,
 } from '@nestjs/common';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 import { MoviesService } from './movies.service';
@@ -22,6 +23,15 @@ export class MoviesController {
     @UseGuards(AuthGuard)
     @Post()
     create(@Body() createMovieDto: CreateMovieDto) {
+        const { title, category, year, rating } = createMovieDto;
+        if (
+            !title ||
+            !category ||
+            typeof year !== 'number' ||
+            typeof rating !== 'number'
+        ) {
+            throw new BadRequestException();
+        }
         return this.moviesService.create(createMovieDto);
     }
 
